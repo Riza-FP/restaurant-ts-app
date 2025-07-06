@@ -1,4 +1,4 @@
-# 🍽️ Restaurant Admin App (TypeScript + Next.js 14 + PostgreSQL)
+# 🍽️ Restaurant Web App (TypeScript + Next.js 14 + PostgreSQL)
 
 This is a full-stack restaurant ordering and admin panel built with **Next.js 14**, **TypeScript**, and **PostgreSQL** running in Docker.
 
@@ -39,33 +39,13 @@ npm install
 docker compose up -d
 ```
 
-### 4. Seed the database
+### 4. Seed the database (optional but recommended)
 
-Connect to PostgreSQL and run:
+You can use the provided `init.sql` to create tables and insert demo data:
 
-```sql
--- Create tables
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL
-);
+```bash
+docker exec -i restaurant-ts-app-db-1 psql -U myuser -d restaurantdb < init.sql
 
-CREATE TABLE product (
-  id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  price NUMERIC(10, 2) NOT NULL
-);
-
-CREATE TABLE orders (
-  id SERIAL PRIMARY KEY,
-  items TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Default admin
-INSERT INTO users (email, password)
-VALUES ('riza@example.com', 'rizafp12');
 ```
 
 ### 5. Start the dev server
@@ -92,17 +72,3 @@ app/
 lib/
   db.ts         → PostgreSQL database connection
 ```
-
-## 📦 API Endpoints
-
-- `POST /api/login` → Authenticate admin user
-- `GET /api/products` → Fetch all menu items
-- `POST /api/products` → Add new item
-- `DELETE /api/products/:id` → Delete item
-- `GET /api/orders` → Fetch orders
-- `POST /api/orders` → Place order
-- `DELETE /api/orders` → Clear all orders
-
-## ✅ License
-
-MIT — feel free to use, remix, or build on top of it!
